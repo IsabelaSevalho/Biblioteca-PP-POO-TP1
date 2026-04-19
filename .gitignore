@@ -1,0 +1,14 @@
+*.class 
+*.jar 
+*.war 
+*.ear 
+bin/ 
+target/ 
+.settings/ 
+.metadata/ 
+.project 
+.classpath 
+.factorypath 
+.recommenders/ 
+.DS_Store 
+Thumbs.db
