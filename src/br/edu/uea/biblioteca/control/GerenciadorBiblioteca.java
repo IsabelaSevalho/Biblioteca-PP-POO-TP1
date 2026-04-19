@@ -6,6 +6,7 @@ import br.edu.uea.biblioteca.model.*;
 
 public class GerenciadorBiblioteca {
 	
+	private static int contadorProfessores;
 	private ArrayList<Usuario> usuarios;
 	private ArrayList<Cargo> cargos;
 	private ArrayList<Livro> livros;
@@ -29,7 +30,11 @@ public class GerenciadorBiblioteca {
 		Usuario u = buscarUsuario(usuario.getCpf());
 	    if (u != null) return false;
 	    
-	    usuarios.add(u);
+	    if(usuario instanceof Professor) {
+	    	++contadorProfessores;
+	    	((Professor)usuario).setSenha(contadorProfessores);
+	    }
+	    usuarios.add(usuario);
 		return true;
 	}
 	
@@ -46,7 +51,7 @@ public class GerenciadorBiblioteca {
 		Livro l = buscarLivro(livro.getIsbn());
 	    if (l != null) return false;
 	    
-		livros.add(l);
+		livros.add(livro);
 		return true;
 	}
 	

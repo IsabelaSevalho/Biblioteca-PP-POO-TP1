@@ -1,7 +1,5 @@
 package br.edu.uea.biblioteca.model;
 
-import java.util.ArrayList;
-
 
 public class Funcionario extends Usuario implements Autenticavel{
 	
@@ -47,7 +45,7 @@ public class Funcionario extends Usuario implements Autenticavel{
 	
 	@Override
 	public boolean login(int senha) {
-		return this.getSenha()==senha;
+		return this.senha==senha;
 	}
 	
 }
