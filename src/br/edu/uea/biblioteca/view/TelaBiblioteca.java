@@ -18,7 +18,6 @@ public class TelaBiblioteca {
 	private EmprestimoController emprestimoController;
 	private CargoController cargoController;
 	private Usuario usuario;
-	String msg;
 	
 	//teste
 	private Funcionario funcionarioAdm;
@@ -28,6 +27,7 @@ public class TelaBiblioteca {
 		usuarioController = new UsuarioController();
 		acervoController= new AcervoController();
 		emprestimoController= new EmprestimoController();
+		cargoController = new CargoController();
 		
 		//teste----------------------------------------------------------------------
 		Cargo adm = new Cargo(123, "Administrador", "Gerencia o sistema e faz os cadastros iniciais, tendo controle total.", 1200);
@@ -73,7 +73,7 @@ public class TelaBiblioteca {
 		            "Menu do Funcionário", JOptionPane.QUESTION_MESSAGE);
 						
 			if (retorno== null) {
-	    		JOptionPane.showMessageDialog(null, "Sessão Professor finalizada.");
+	    		JOptionPane.showMessageDialog(null, "Sessão Funcionário finalizada.");
 	            break; 
 	        }
 			
@@ -102,6 +102,7 @@ public class TelaBiblioteca {
 					
 				case 5://Registrar devolução de livro
 					registrarDevolucao();
+					break;
 					
 				case 6://cadastrar funcionarios
 					cadastrarFuncionarios();
@@ -201,11 +202,11 @@ public class TelaBiblioteca {
                 JOptionPane.showMessageDialog(null, "Nenhum livro encontrado com o título: \"" + titulo + "\".");
                 
             } else {
-                msg = "Livros encontrados no acervo:\n\n";
+            	String msg = "Livros encontrados no acervo:\n\n";
                  
                 for(Livro livro : resultadoBusca) {
                 	msg+= "Título: "+livro.getTitulo()+"\nAutores: "+livro.getAutores()
-                		+"Editora: "+livro.getEditora()+"\nNúmero de páginas: "+livro.getNumeroPaginas()
+                		+"\nEditora: "+livro.getEditora()+"\nNúmero de páginas: "+livro.getNumeroPaginas()
                 		+"\nISBN: "+livro.getIsbn()+"\nGênero: "+livro.getGenero()+"\nSinopse: "+livro.getSinopse()
                 		+"\nIdioma: "+livro.getIdioma()+"\nStatus: "+(emprestimoController.verificarDisponibilidade(livro.getIsbn())? "Disponível" : "Indisponível");
                 }
@@ -218,9 +219,9 @@ public class TelaBiblioteca {
 	
 	
 	private void cadastrarLivro() {
-		int exibirCadastroLivro=-1;
+		boolean exibirCadastroLivro =true;
 		
-		while(exibirCadastroLivro!=0) {
+		while(exibirCadastroLivro) {
 			JPanel painelDadosLivro = new JPanel();
 			JTextField campoTitulo = new JTextField(20);
 			JTextField campoAutores = new JTextField(20);
@@ -270,21 +271,21 @@ public class TelaBiblioteca {
 			    
 			    if(acervoController.cadastrarLivro(livro)) {
 			    	JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
-			    	exibirCadastroLivro=0;
+			    	exibirCadastroLivro=false;
 			    }else {
 			    	JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o livro.");
 			    }
 			}else {
 				JOptionPane.showMessageDialog(null, "Fechando Cadastro de Livros.");
-				exibirCadastroLivro=0;
+				exibirCadastroLivro=false;
 			}
 		}
-		
+			
 	}
 	
 	public void listarLivros() {
 		ArrayList<Livro> livros = acervoController.getLivros();
-		msg = "Livros encontrados no acervo:\n\n";
+		String msg = "Livros encontrados no acervo:\n\n";
         
 		if(livros.isEmpty()) msg="Nenhum livro está cadastrado no sistema!";
 			
@@ -300,9 +301,9 @@ public class TelaBiblioteca {
 	}
 	
 	public void registrarEmprestimo() {
-		int exibirRegistroEmprestimo=-1;
+		boolean exibirRegistroEmprestimo=true;
 		
-		while(exibirRegistroEmprestimo!=0) {
+		while(exibirRegistroEmprestimo) {
 			JPanel painelEmprestimo = new JPanel();
 			JTextField campoCPF = new JTextField(10);
 			JTextField campoISBN = new JTextField(10);
@@ -323,22 +324,22 @@ public class TelaBiblioteca {
 			    
 			    if(emprestimoController.realizarEmprestimo(isbn, cpf)) {
 			    	JOptionPane.showMessageDialog(null, "Empréstimo realizado com sucesso!");
-			    	exibirRegistroEmprestimo=0;
+			    	exibirRegistroEmprestimo=false;
 			    }else {
 			    	JOptionPane.showMessageDialog(null, "Usuário ou livro inexistentes ou Usuário não pode fazer empréstimos.");
 			    }
 			}else {
 				JOptionPane.showMessageDialog(null, "Fechando registro de empréstimos.");
-				exibirRegistroEmprestimo=0;
+				exibirRegistroEmprestimo=false;
 			}
 		}
 		
 	}
 	
 	public void registrarDevolucao() {
-		int exibirRegistroDevolucao=-1;
+		boolean exibirRegistroDevolucao=true;
 		
-		while(exibirRegistroDevolucao!=0) {
+		while(exibirRegistroDevolucao) {
 			JPanel painelDevolucao = new JPanel();
 			JTextField campoCPF = new JTextField(10); 
 			JTextField campoISBN = new JTextField(10);
@@ -359,27 +360,34 @@ public class TelaBiblioteca {
 			    
 			    if(emprestimoController.devolucao(isbn, cpf)) {
 			    	JOptionPane.showMessageDialog(null, "Devolução realizada com sucesso!");
-			    	exibirRegistroDevolucao=0;
+			    	exibirRegistroDevolucao=false;
 			    }else {
 			    	JOptionPane.showMessageDialog(null, "Usuário, livro ou empréstimo inexistentes ");
 			    }
 			}else {
 				JOptionPane.showMessageDialog(null, "Fechando registro de devoluções.");
-				exibirRegistroDevolucao=0;
+				exibirRegistroDevolucao=false;
 			}
 		}
 	}
 	
 	public void cadastrarFuncionarios() {
-		int exibirCadastroFuncionario =-1;
+		boolean exibirCadastroFuncionario =true;
 		
-		while(exibirCadastroFuncionario!=0) {
+		while(exibirCadastroFuncionario) {
 			JPanel painelDadosFuncionario = new JPanel();
 			JTextField campoCpf = new JTextField(15);
 			JTextField campoNome = new JTextField(20);
 			JTextField campoEmail = new JTextField(20);
 			
 			ArrayList<Cargo> cargos = cargoController.getCargos();
+			
+			if(cargos.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Não existem registros de cargos, então não é possível adicionar um novo funcionário.");
+				exibirCadastroFuncionario=false;
+				break;
+			}
+			
 			JComboBox<String> comboCargo = new JComboBox<>(); //p poder add as opções pre-definidas
 			for (Cargo c : cargos) {
 			    comboCargo.addItem(c.getCodigo()+ " - " +c.getNome());
@@ -426,20 +434,20 @@ public class TelaBiblioteca {
 			    
 			    if(usuarioController.cadastrarUsuario(funcionario)) {
 			    	JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
-			    	exibirCadastroFuncionario=0;
+			    	exibirCadastroFuncionario=false;
 			    }else {
 			    	JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o funcionário.");
 			    }
 			}else {
 				JOptionPane.showMessageDialog(null, "Fechando Cadastro de Funcionários.");
-				exibirCadastroFuncionario=0;
+				exibirCadastroFuncionario=false;
 			}
 		}
 	}
 	
 	public void listarFuncionarios() {
 		ArrayList<Funcionario> funcionarios = usuarioController.getFuncionarios();
-		msg = "Funcionários cadastrados no sistema:\n\n";
+		String msg = "Funcionários cadastrados no sistema:\n\n";
         
 		if(funcionarios.isEmpty()) msg="Nenhum funcionário está cadastrado no sistema!";
 		
@@ -453,9 +461,9 @@ public class TelaBiblioteca {
 	}
 	
 	public void cadastrarProfessor() {
-		int exibirCadastroProfessor =-1;
+		boolean exibirCadastroProfessor =true;
 		
-		while(exibirCadastroProfessor!=0) {
+		while(exibirCadastroProfessor) {
 			JPanel painelDadosProfessor = new JPanel();
 			JTextField campoCpf = new JTextField(15);
 			JTextField campoNome = new JTextField(20);
@@ -484,21 +492,21 @@ public class TelaBiblioteca {
 				    Professor professor = new Professor(cpf, nome, email, titulacao);
 			    
 			    if(usuarioController.cadastrarUsuario(professor)) {
-			    	JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
-			    	exibirCadastroProfessor=0;
+			    	JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso! Informe ao professor que a sua senha é: "+professor.getSenha());
+			    	exibirCadastroProfessor=false;
 			    }else {
 			    	JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o professor.");
 			    }
 			}else {
 				JOptionPane.showMessageDialog(null, "Fechando Cadastro de Professores.");
-				exibirCadastroProfessor=0;
+				exibirCadastroProfessor=false;
 			}
 		}
 	}
 	
 	public void listarProfessores() {
 		ArrayList<Professor> professores = usuarioController.getProfessores();
-		msg = "Professores cadastrados no sistema:\n\n";
+		String msg = "Professores cadastrados no sistema:\n\n";
         
 		if(professores.isEmpty()) msg="Nenhum professor está cadastrado no sistema!";
 		
@@ -511,9 +519,9 @@ public class TelaBiblioteca {
 	}
 	
 	public void cadastrarAluno() {
-		int exibirCadastroAluno =-1;
+		boolean exibirCadastroAluno =true;
 		
-		while(exibirCadastroAluno!=0) {
+		while(exibirCadastroAluno) {
 			JPanel painelDadosAluno = new JPanel();
 			JTextField campoCpf = new JTextField(15);
 			JTextField campoNome = new JTextField(20);
@@ -551,36 +559,36 @@ public class TelaBiblioteca {
 			    
 			    if(usuarioController.cadastrarUsuario(aluno)) {
 			    	JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
-			    	exibirCadastroAluno=0;
+			    	exibirCadastroAluno=false;
 			    }else {
 			    	JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o aluno.");
 			    }
 			}else {
 				JOptionPane.showMessageDialog(null, "Fechando Cadastro de Alunos.");
-				exibirCadastroAluno=0;
+				exibirCadastroAluno=false;
 			}
 		}
 	}
 	
 	public void listarAlunos() {
 		ArrayList<Aluno> alunos = usuarioController.getAlunos();
-		msg = "Alunos cadastrados no sistema:\n\n";
+		String msg = "Alunos cadastrados no sistema:\n\n";
         
 		if(alunos.isEmpty()) msg="Nenhum aluno está cadastrado no sistema!";
 		
         for(Aluno aluno : alunos) {
         	msg+= "CPF: "+aluno.getCpf()+"\nNome: "+aluno.getNome()
         		+"\nEmail: "+aluno.getEmail()+"\nInstituição de ensino: "+aluno.getInstituicaoDeEnsino()
-        		+"\nCurso: "+aluno+"\nNota do último ENEM: "+aluno.getNotaUltimoENEM()+"\n";
+        		+"\nCurso: "+aluno.getCurso()+"\nNota do último ENEM: "+aluno.getNotaUltimoENEM()+"\n";
         }
         
         JOptionPane.showMessageDialog(null, msg);
 	}
 	
 	public void cadastrarCargo() {
-		int exibirCadastroCargo =-1;
+		boolean exibirCadastroCargo =true;
 		
-		while(exibirCadastroCargo!=0) {
+		while(exibirCadastroCargo) {
 			JPanel painelDadosProfessor = new JPanel();
 			JTextField campoCodigo = new JTextField(15);
 			JTextField campoNome = new JTextField(20);
@@ -609,20 +617,20 @@ public class TelaBiblioteca {
 			    
 			    if(cargoController.cadastrarCargo(cargo)) {
 			    	JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
-			    	exibirCadastroCargo=0;
+			    	exibirCadastroCargo=false;
 			    }else {
 			    	JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o cargo.");
 			    }
 			}else {
 				JOptionPane.showMessageDialog(null, "Fechando Cadastro de Cargos.");
-				exibirCadastroCargo=0;
+				exibirCadastroCargo=false;
 			}
 		}
 	}
 	
 	public void listarCargos() {
 		ArrayList<Cargo> cargos = cargoController.getCargos();
-		msg = "Cargos cadastrados no sistema:\n\n";
+		String msg = "Cargos cadastrados no sistema:\n\n";
         
 		if(cargos.isEmpty()) msg="Nenhum cargo está cadastrado no sistema!";
 		
@@ -635,15 +643,46 @@ public class TelaBiblioteca {
 	}
 	
 	public void listarUsuarios() {
-		listarFuncionarios();
-		listarProfessores();
-		listarAlunos();
+
+		ArrayList<Funcionario> funcionarios = usuarioController.getFuncionarios();
+		String msg = "Funcionários:\n\n";
+        
+		if(funcionarios.isEmpty()) msg+="Nenhum funcionário está cadastrado no sistema!";
+		
+        for(Funcionario funcionario : funcionarios) {
+        	msg+= "CPF: "+funcionario.getCpf()+"\nNome: "+funcionario.getNome()
+        		+"\nEmail: "+funcionario.getEmail()+"\nCargo: "+funcionario.getCargo().getNome()
+        		+"\nSalário: R$"+funcionario.getSalario()+"\n";
+        }
+		
+        ArrayList<Professor> professores = usuarioController.getProfessores();
+		msg += "\nProfessores:\n\n";
+        
+		if(professores.isEmpty()) msg+="Nenhum professor está cadastrado no sistema!";
+		
+        for(Professor professor : professores) {
+        	msg+= "CPF: "+professor.getCpf()+"\nNome: "+professor.getNome()
+        		+"\nEmail: "+professor.getEmail()+"\nTitulação: "+professor.getTitulacao()+"\n";
+        }
+        
+        ArrayList<Aluno> alunos = usuarioController.getAlunos();
+		msg += "\nAlunos:\n\n";
+        
+		if(alunos.isEmpty()) msg+="Nenhum aluno está cadastrado no sistema!";
+		
+        for(Aluno aluno : alunos) {
+        	msg+= "CPF: "+aluno.getCpf()+"\nNome: "+aluno.getNome()
+        		+"\nEmail: "+aluno.getEmail()+"\nInstituição de ensino: "+aluno.getInstituicaoDeEnsino()
+        		+"\nCurso: "+aluno.getCurso()+"\nNota do último ENEM: "+aluno.getNotaUltimoENEM()+"\n";
+        }
+        
+        JOptionPane.showMessageDialog(null, msg);
 	}
 	
 	public void iniciarLogin() {
-		int exibirMenu=-1;
+		boolean exibirMenu=true;
 		
-		while(exibirMenu!=0) {
+		while(exibirMenu) {
 			JPanel painelLogin = new JPanel();//agrupa os elementos p aparecer na janela
 			JTextField campoCPF = new JTextField(10); //caixa de entrada
 			JTextField campoSenha = new JTextField(10);
@@ -673,7 +712,7 @@ public class TelaBiblioteca {
 			    }
 			}else {
 				JOptionPane.showMessageDialog(null, "Fechando sistema.");
-				exibirMenu=0;
+				exibirMenu=false;
 			}
 		}
 	}
