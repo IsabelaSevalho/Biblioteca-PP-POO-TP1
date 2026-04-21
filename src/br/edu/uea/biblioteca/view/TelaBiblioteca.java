@@ -26,7 +26,7 @@ public class TelaBiblioteca {
 	public TelaBiblioteca() {
 		usuarioController = new UsuarioController();
 		acervoController= new AcervoController();
-		emprestimoController= new EmprestimoController();
+		emprestimoController= new EmprestimoController(acervoController, usuarioController);
 		cargoController = new CargoController();
 		
 		//teste----------------------------------------------------------------------
@@ -289,7 +289,7 @@ public class TelaBiblioteca {
         		+"\nEditora: "+livro.getEditora()+"\nNúmero de páginas: "+livro.getNumeroPaginas()
         		+"\nISBN: "+livro.getIsbn()+"\nGênero: "+livro.getGenero()+"\nSinopse: "+livro.getSinopse()
         		+"\nIdioma: "+livro.getIdioma()+"\nStatus: "+(emprestimoController.verificarDisponibilidade(livro.getIsbn())? "Disponível" : "Indisponível")
-        		+"\n";
+        		+"\n\n";
         }
         
         JOptionPane.showMessageDialog(null, msg);
@@ -449,7 +449,7 @@ public class TelaBiblioteca {
         for(Funcionario funcionario : funcionarios) {
         	msg+= "CPF: "+funcionario.getCpf()+"\nNome: "+funcionario.getNome()
         		+"\nEmail: "+funcionario.getEmail()+"\nCargo: "+funcionario.getCargo().getNome()
-        		+"\nSalário: R$"+funcionario.getSalario()+"\n";
+        		+"\nSalário: R$"+funcionario.getSalario()+"\n\n";
         }
         
         JOptionPane.showMessageDialog(null, msg);
@@ -507,7 +507,7 @@ public class TelaBiblioteca {
 		
         for(Professor professor : professores) {
         	msg+= "CPF: "+professor.getCpf()+"\nNome: "+professor.getNome()
-        		+"\nEmail: "+professor.getEmail()+"\nTitulação: "+professor.getTitulacao()+"\n";
+        		+"\nEmail: "+professor.getEmail()+"\nTitulação: "+professor.getTitulacao()+"\n\n";
         }
         
         JOptionPane.showMessageDialog(null, msg);
@@ -574,7 +574,7 @@ public class TelaBiblioteca {
         for(Aluno aluno : alunos) {
         	msg+= "CPF: "+aluno.getCpf()+"\nNome: "+aluno.getNome()
         		+"\nEmail: "+aluno.getEmail()+"\nInstituição de ensino: "+aluno.getInstituicaoDeEnsino()
-        		+"\nCurso: "+aluno.getCurso()+"\nNota do último ENEM: "+aluno.getNotaUltimoENEM()+"\n";
+        		+"\nCurso: "+aluno.getCurso()+"\nNota do último ENEM: "+aluno.getNotaUltimoENEM()+"\n\n";
         }
         
         JOptionPane.showMessageDialog(null, msg);
@@ -631,7 +631,7 @@ public class TelaBiblioteca {
 		
         for(Cargo cargo : cargos) {
         	msg+= "Código: "+cargo.getCodigo()+"\nNome: "+cargo.getNome()
-        		+"\nDescrição: "+cargo.getDescricao()+"\nCarga Horária: "+cargo.getCargaHoraria()+" horas\n";
+        		+"\nDescrição: "+cargo.getDescricao()+"\nCarga Horária: "+cargo.getCargaHoraria()+" horas\n\n";
         }
         
         JOptionPane.showMessageDialog(null, msg);

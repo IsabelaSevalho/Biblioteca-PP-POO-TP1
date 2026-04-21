@@ -13,9 +13,9 @@ public class EmprestimoController {
 	private AcervoController acervoController;
     private UsuarioController usuarioController;
     
-    public EmprestimoController() {
-    	acervoController= new AcervoController();
-    	usuarioController = new UsuarioController();
+    public EmprestimoController(AcervoController acervoController,  UsuarioController usuarioController) {
+    	this.acervoController= acervoController;
+    	this.usuarioController = usuarioController;
     	emprestimos = new ArrayList<>();
     }
     
