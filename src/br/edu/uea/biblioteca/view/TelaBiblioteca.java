@@ -2,6 +2,7 @@ package br.edu.uea.biblioteca.view;
 
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,7 +32,8 @@ public class TelaBiblioteca {
 		
 		//teste----------------------------------------------------------------------
 		Cargo adm = new Cargo(123, "Administrador", "Gerencia o sistema e faz os cadastros iniciais, tendo controle total.", 1200);
-		funcionarioAdm = new Funcionario("04503078240", "Ana Banana", "adm@gmail.com", adm, 44000.01, 123);
+		cargoController.cadastrarCargo(adm);
+		funcionarioAdm = new Funcionario("123456789", "Ana Banana", "adm@gmail.com", adm, 44000.01, 123);
 		usuarioController.cadastrarUsuario(funcionarioAdm);
 	}
 	
@@ -218,6 +220,8 @@ public class TelaBiblioteca {
 		
 		while(exibirCadastroLivro) {
 			JPanel painelDadosLivro = new JPanel();
+			painelDadosLivro.setLayout(new BoxLayout(painelDadosLivro, BoxLayout.Y_AXIS));
+			
 			JTextField campoTitulo = new JTextField(20);
 			JTextField campoAutores = new JTextField(20);
 			JTextField campoEditora = new JTextField(20);
@@ -300,6 +304,7 @@ public class TelaBiblioteca {
 		
 		while(exibirRegistroEmprestimo) {
 			JPanel painelEmprestimo = new JPanel();
+			painelEmprestimo.setLayout(new BoxLayout(painelEmprestimo, BoxLayout.Y_AXIS));
 			JTextField campoCPF = new JTextField(10);
 			JTextField campoISBN = new JTextField(10);
 			
@@ -336,6 +341,7 @@ public class TelaBiblioteca {
 		
 		while(exibirRegistroDevolucao) {
 			JPanel painelDevolucao = new JPanel();
+			painelDevolucao.setLayout(new BoxLayout(painelDevolucao, BoxLayout.Y_AXIS));
 			JTextField campoCPF = new JTextField(10); 
 			JTextField campoISBN = new JTextField(10);
 			
@@ -371,6 +377,7 @@ public class TelaBiblioteca {
 		
 		while(exibirCadastroFuncionario) {
 			JPanel painelDadosFuncionario = new JPanel();
+			painelDadosFuncionario.setLayout(new BoxLayout(painelDadosFuncionario, BoxLayout.Y_AXIS));
 			JTextField campoCpf = new JTextField(15);
 			JTextField campoNome = new JTextField(20);
 			JTextField campoEmail = new JTextField(20);
@@ -460,6 +467,7 @@ public class TelaBiblioteca {
 		
 		while(exibirCadastroProfessor) {
 			JPanel painelDadosProfessor = new JPanel();
+			painelDadosProfessor.setLayout(new BoxLayout(painelDadosProfessor, BoxLayout.Y_AXIS));
 			JTextField campoCpf = new JTextField(15);
 			JTextField campoNome = new JTextField(20);
 			JTextField campoEmail = new JTextField(20);
@@ -518,6 +526,7 @@ public class TelaBiblioteca {
 		
 		while(exibirCadastroAluno) {
 			JPanel painelDadosAluno = new JPanel();
+			painelDadosAluno.setLayout(new BoxLayout(painelDadosAluno, BoxLayout.Y_AXIS));
 			JTextField campoCpf = new JTextField(15);
 			JTextField campoNome = new JTextField(20);
 			JTextField campoEmail = new JTextField(20);
@@ -584,23 +593,24 @@ public class TelaBiblioteca {
 		boolean exibirCadastroCargo =true;
 		
 		while(exibirCadastroCargo) {
-			JPanel painelDadosProfessor = new JPanel();
+			JPanel painelDadosCargo = new JPanel();
+			painelDadosCargo.setLayout(new BoxLayout(painelDadosCargo, BoxLayout.Y_AXIS));
 			JTextField campoCodigo = new JTextField(15);
 			JTextField campoNome = new JTextField(20);
 			JTextField campoDescricao = new JTextField(20);
 			JTextField campoCargaHoraria = new JTextField(15);			
 
-			painelDadosProfessor.add(new JLabel("Código:"));
-			painelDadosProfessor.add(campoCodigo);
-			painelDadosProfessor.add(new JLabel("Nome:"));
-			painelDadosProfessor.add(campoNome);
-			painelDadosProfessor.add(new JLabel("Descrição:"));
-			painelDadosProfessor.add(campoDescricao);
-			painelDadosProfessor.add(new JLabel("Carga horária:"));
-			painelDadosProfessor.add(campoCargaHoraria);
+			painelDadosCargo.add(new JLabel("Código:"));
+			painelDadosCargo.add(campoCodigo);
+			painelDadosCargo.add(new JLabel("Nome:"));
+			painelDadosCargo.add(campoNome);
+			painelDadosCargo.add(new JLabel("Descrição:"));
+			painelDadosCargo.add(campoDescricao);
+			painelDadosCargo.add(new JLabel("Carga horária:"));
+			painelDadosCargo.add(campoCargaHoraria);
 			
 			
-			int confirmacao = JOptionPane.showConfirmDialog(null, painelDadosProfessor, "Sistema - Biblioteca UEA - Cadastro Cargos", JOptionPane.OK_CANCEL_OPTION);
+			int confirmacao = JOptionPane.showConfirmDialog(null, painelDadosCargo, "Sistema - Biblioteca UEA - Cadastro Cargos", JOptionPane.OK_CANCEL_OPTION);
 
 			if (confirmacao == JOptionPane.OK_OPTION) {
 				 	int codigo = Integer.parseInt(campoCodigo.getText());
@@ -679,6 +689,7 @@ public class TelaBiblioteca {
 		
 		while(exibirMenu) {
 			JPanel painelLogin = new JPanel();//agrupa os elementos p aparecer na janela
+			painelLogin.setLayout(new BoxLayout(painelLogin, BoxLayout.Y_AXIS));
 			JTextField campoCPF = new JTextField(10); //caixa de entrada
 			JTextField campoSenha = new JTextField(10);
 			
