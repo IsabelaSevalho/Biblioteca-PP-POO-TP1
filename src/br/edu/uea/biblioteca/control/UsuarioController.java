@@ -2,21 +2,23 @@ package br.edu.uea.biblioteca.control;
 
 import java.util.ArrayList;
 
-import br.edu.uea.biblioteca.model.*;
+import br.edu.uea.biblioteca.model.Aluno;
+import br.edu.uea.biblioteca.model.Autenticavel;
+import br.edu.uea.biblioteca.model.Funcionario;
+import br.edu.uea.biblioteca.model.Professor;
+import br.edu.uea.biblioteca.model.Usuario;
 
-public class GerenciadorBiblioteca {
+public class UsuarioController {
 	
 	private static int contadorProfessores;
 	private ArrayList<Usuario> usuarios;
-	private ArrayList<Cargo> cargos;
-	private ArrayList<Livro> livros;
 	
-	public GerenciadorBiblioteca() {
+	public UsuarioController() {
 		usuarios = new ArrayList<>();
-		cargos = new ArrayList<>();
-		livros = new ArrayList<>();		
 	}
-		
+	
+	//Create (Criar), Read (Ler/Consultar), Update (Atualizar) e Delete (Deletar/Excluir)
+	
 	public Usuario buscarUsuario(String cpf) {
 		for(Usuario u : usuarios) {
 			if(cpf.equals(u.getCpf())) {
@@ -38,41 +40,12 @@ public class GerenciadorBiblioteca {
 		return true;
 	}
 	
-	public Livro buscarLivro(String isbn) {
-		for(Livro l : livros) {
-			if(isbn.equals(l.getIsbn())) {
-				return l;
-			}
-		}
-		return null;
-	}
-	
-	public boolean cadastrarLivro(Livro livro) {
-		Livro l = buscarLivro(livro.getIsbn());
-	    if (l != null) return false;
-	    
-		livros.add(livro);
-		return true;
-	}
-	
 	public boolean login(String cpf, int senha) {
 		Usuario u = buscarUsuario(cpf);
 		if(u!=null && (u instanceof Autenticavel)) {
 			return ((Autenticavel)u).login(senha);
 		}
 		return false;
-	}
-	
-	public ArrayList<Livro> consultarAcervo(String tituloBuscado){
-		ArrayList<Livro> livrosRetornados = new ArrayList<>();
-		
-		for(Livro l : livros) {
-			if(l.getTitulo().toLowerCase().contains(tituloBuscado.toLowerCase())) {
-				livrosRetornados.add(l);
-			}
-		}
-		
-		return livrosRetornados;
 	}
 	
 	public ArrayList<Funcionario> getFuncionarios() {
@@ -103,15 +76,6 @@ public class GerenciadorBiblioteca {
 	        }
 	    }
 	    return alunos;
-	}
-	
-	
-	public ArrayList<Cargo> getCargos(){
-		return this.cargos;
-	}
-	
-	public ArrayList<Livro> getLivros() {
-		return this.livros;
 	}
 
 }
