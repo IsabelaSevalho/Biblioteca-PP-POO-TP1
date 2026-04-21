@@ -31,13 +31,8 @@ public class TelaBiblioteca {
 		
 		//teste----------------------------------------------------------------------
 		Cargo adm = new Cargo(123, "Administrador", "Gerencia o sistema e faz os cadastros iniciais, tendo controle total.", 1200);
-		funcionarioAdm = new Funcionario("83692756440", "Ana Banana", "adm@gmail.com", adm, 44000.01, 123);
-		
-		//TESTE
-		Professor prof= new Professor("04503078240", "Isabela", "isa@gmail.com", "Mestre");
-		
+		funcionarioAdm = new Funcionario("04503078240", "Ana Banana", "adm@gmail.com", adm, 44000.01, 123);
 		usuarioController.cadastrarUsuario(funcionarioAdm);
-		usuarioController.cadastrarUsuario(prof);
 	}
 	
 	public boolean login(String cpf, int senha) {
@@ -81,7 +76,7 @@ public class TelaBiblioteca {
 			
 			switch(opcao) {
 				case 0://sair
-					JOptionPane.showMessageDialog(null,"Finalizando sistema...");
+					JOptionPane.showMessageDialog(null,"Saindo da sua conta...");
 					break;
 					
 				case 1://consultar acervo
